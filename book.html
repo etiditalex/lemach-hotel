@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book a room — Lemach Hotel</title>
+  <meta name="description" content="Book your stay at Lemach Hotel in Kilifi County. Quick WhatsApp and email reservation options." />
+  <meta name="keywords" content="Kilifi hotel, boutique hotel Kilifi, accommodation in Kilifi, Kilifi restaurant, Swahili cuisine Kilifi, family-friendly hotel Kilifi, Kilifi beach hotel, Kilifi Creek, weekend getaway from Mombasa, Malindi to Kilifi stay, dhow cruise Kilifi" />
+  <meta name="theme-color" content="#3B8CA8" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Book a room — Lemach Hotel" />
+  <meta property="og:description" content="Book your stay at Lemach Hotel in Kilifi County. Quick WhatsApp and email reservation options." />
+  <meta property="og:image" content="images/og-cover.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+</head>
+<body>
+  <div id="top"></div>
+  <div id="site-header"></div>
+  
+<main class="container">
+  <section>
+    <h2 class="display">Book a Room</h2>
+    <p class="section-sub">Send a quick request—our team will confirm rates and availability.</p>
+    <div class="grid cols-2">
+      <div class="card">
+        <form id="bookingForm">
+          <div class="inline">
+            <div>
+              <label for="checkin">Check‑in</label>
+              <input id="checkin" type="date" required />
+            </div>
+            <div>
+              <label for="checkout">Check‑out</label>
+              <input id="checkout" type="date" required />
+            </div>
+          </div>
+          <div class="inline">
+            <div>
+              <label for="room">Room type</label>
+              <select id="room">
+                <option>Standard</option>
+                <option>Superior Garden</option>
+                <option>Superior Creek‑Side</option>
+                <option>Family Room</option>
+              </select>
+            </div>
+            <div>
+              <label for="guests">Guests</label>
+              <input id="guests" type="number" min="1" value="2" />
+            </div>
+          </div>
+          <div class="inline">
+            <div>
+              <label for="name">Full name</label>
+              <input id="name" required />
+            </div>
+            <div>
+              <label for="phone">Phone/WhatsApp</label>
+              <input id="phone" required />
+            </div>
+          </div>
+          <div>
+            <label for="notes">Notes (optional)</label>
+            <textarea id="notes" rows="4" placeholder="e.g., airport transfer, crib request"></textarea>
+          </div>
+          <div class="inline">
+            <button class="btn primary" type="submit">Send via WhatsApp</button>
+            <button class="btn" type="button" id="emailBtn">Send via Email</button>
+          </div>
+          <p class="muted">By sending, you agree to our policies. Free cancellation until 3 days before arrival.</p>
+        </form>
+      </div>
+      <div class="card">
+        <strong>Why book direct?</strong>
+        <ul>
+          <li>Best available rates</li>
+          <li>Flexible cancellation</li>
+          <li>Priority for upgrades</li>
+        </ul>
+        <strong>Check‑in / out</strong>
+        <p>14:00 / 10:00</p>
+        <strong>Payments</strong>
+        <p>M‑Pesa, major cards, bank transfer</p>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+// Pre-fill room from query string
+const params = new URLSearchParams(location.search);
+if (params.get('room')) document.getElementById('room').value = params.get('room');
+
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const ci = document.getElementById('checkin').value;
+  const co = document.getElementById('checkout').value;
+  const room = document.getElementById('room').value;
+  const guests = document.getElementById('guests').value;
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const notes = document.getElementById('notes').value.trim();
+  if (!ci || !co){ alert('Please select your dates.'); return; }
+  const text = `Hi Lemach Hotel,%0AReservation request:%0A- Name: ${encodeURIComponent(name)}%0A- Phone: ${encodeURIComponent(phone)}%0A- Room: ${encodeURIComponent(room)}%0A- Guests: ${guests}%0A- Check-in: ${ci}%0A- Check-out: ${co}%0A- Notes: ${encodeURIComponent(notes)}`;
+  window.open(`https://wa.me/254700000000?text=${text}`, '_blank');
+});
+
+document.getElementById('emailBtn').addEventListener('click', function(){
+  const ci = document.getElementById('checkin').value;
+  const co = document.getElementById('checkout').value;
+  const room = document.getElementById('room').value;
+  const guests = document.getElementById('guests').value;
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const notes = document.getElementById('notes').value.trim();
+  const subject = 'Reservation request — Lemach Hotel';
+  const body = `Name: ${name}%0D%0APhone: ${phone}%0D%0ARoom: ${room}%0D%0AGuests: ${guests}%0D%0ACheck-in: ${ci}%0D%0ACheck-out: ${co}%0D%0ANotes: ${encodeURIComponent(notes)}`;
+  window.location.href = `mailto:stay@lemachhotel.co.ke?subject=${encodeURIComponent(subject)}&body=${body}`;
+});
+</script>
+
+  <div id="site-footer"></div>
+  <script src="/assets/js/main.js"></script>
+  <script>loadPartials('book');</script>
+</body>
+</html>
